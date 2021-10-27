@@ -1,0 +1,46 @@
+print ("Hello, Luck Calculator:\n")
+print ("STDIN \n-----")
+    
+#input and constraints
+n = int(input("Digite n (int): "))
+while n < 1 or n > 100:
+    print("n inválido")
+    n = int(input("Digite n (int): "))
+        
+k = int(input("Digite k (1 ou 0): "))
+while k < 0 or k > n:
+    print("k inválido")
+    k = int(input("Digite k (1 ou 0): "))
+        
+contests = []
+L = []
+for contest_index in range(n):
+    li = int(input(f"digite L[{contest_index}]: "))
+    while li < 1 or li > 10000:
+        print("L[i] inválido")
+        li = int(input(f"digite L[{contest_index}]: "))
+    ti = int(input(f"digite T[{contest_index}]: "))
+    while ti != 0 and ti != 1:
+        print("T[i] inválido")
+        ti = int(input(f"digite T[{contest_index}]: "))
+    contests.append([li,ti])
+    if ti == 1:
+        L.append(li)
+        
+print ("\nFunction \n--------")
+print (f"n = {n}, k = {k}")
+print (f"contests = {contests}")
+
+def calc_max_luck(k,contests):
+    max_luck = 0
+    loses = len(L)-k
+    while loses != 0:
+        max_luck -= min(L)
+        contests.pop(L.index(min(L)))
+        L.remove(min(L))
+        loses -= 1
+    for contest in contests:
+        max_luck += contest[0]
+    return max_luck
+
+print (calc_max_luck(k,contests))
